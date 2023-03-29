@@ -8,6 +8,8 @@
   <a-scene embedded arjs="trackingMethod: best; sourceType: webcam;" onclick="document.querySelector('#videoSource').play();">
     <a-marker type="pattern" url="pattern-shiroharaAR.patt">
       <a-entity id="video" geometry="primitive: plane; width: 1; height: auto;" material="shader: flat; src: #videoSource;" position="0 0 0" rotation="-90 0 0"></a-entity>
+      <a-video src="https://res.cloudinary.com/creative-web-solutions-llc/video/upload/v1555785951/VRAssets/Crake_Elegy.mp4" width="2" height="1.2" scale="2 2 2" opacity="0.65">
+    </a-video>
     </a-marker>
     <a-assets timeout="10000">
       <video id="videoSource" src="https://res.cloudinary.com/creative-web-solutions-llc/video/upload/v1555785951/VRAssets/Crake_Elegy.mp4" crossorigin="anonymous" loop="true"></video>
