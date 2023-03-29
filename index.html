@@ -1,47 +1,57 @@
+<html>
 <script src="https://aframe.io/releases/0.9.2/aframe.min.js"></script>
-<!-- <script src="https://cdn.jsdelivr.net/gh/aframevr/aframe@1c2407b26c61958baa93967b5412487cd94b290b/dist/aframe-master.min.js"></script> -->
 <script src="https://cdn.rawgit.com/jeromeetienne/AR.js/1.7.7/aframe/build/aframe-ar.js"></script>
-<!-- <script src="https://raw.githack.com/AR-js-org/AR.js/3.0.0/aframe/build/aframe-ar-nft.js"></script> -->
-
-
-
-  <body style='margin : 0px; overflow: hidden;'>
+    <body style='margin : 0px; overflow: hidden;'>
 
     <a-assets>
+        <video id="ar-video" autoplay loop="true" preload="auto" src="https://res.cloudinary.com/creative-web-solutions-llc/video/upload/v1555785951/VRAssets/Crake_Elegy.mp4"></video>
+        <audio src="videopath" autoplay></audio>
+    </a-assets>
 
-	    <video id="ar-video" autoplay loop="true" preload="auto" src="https://res.cloudinary.com/creative-web-solutions-llc/video/upload/v1555785951/VRAssets/Crake_Elegy.mp4"></video>
+    
 
-		<audio src="videopath" autoplay></audio>
-
-	  </a-assets>
-
-	  <!-- デバッグ用の画面表示、VR用のボタンをそれぞれ非表示に -->
+    <!-- デバッグ用の画面表示、VR用のボタンをそれぞれ非表示に -->
     <a-scene embedded arjs="debugUIEnabled:false;" vr-mode-ui="enabled: false">
-      <!-- 今回作成した『.patt』ファイルを読み込む -->
-      <a-marker type='pattern' url='pattern-shiroharaAR.patt'>
-	      <a-video src="#ar-video" width="4.6" height="4.6" position="0 0 0" rotation="270 0 0" play="true"></a-video>
-      </a-marker>
-
-      <!-- <a-nft
-      type="nft"        
-      url="https://cdn.glitch.global/24c94111-7a50-4163-a9e1-9d6d366b5663/nolimit"
-      smooth="true"
-      smoothCount="10"
-      smoothTolerance=".01"
-      smoothThreshold="5">
-      <a-video src="#ar-video" width="4.6" height="4.6" position="0 0 0" rotation="270 0 0" play="true"></a-video>
-    </a-nft> -->
-      <a-entity camera></a-entity>
+    <!-- 今回作成した『.patt』ファイルを読み込む -->
+    <!-- ※こちらで試す時には、"hiro"のマーカー定義に変更して確認しました -->
+    <a-marker type='pattern' url='pattern-shiroharaAR.png'>
+        <a-video src="#ar-video" width="4.6" height="4.6" position="0 0 0" rotation="270 0 0" play="true"></a-video>
+    </a-marker>
+    <a-entity camera></a-entity>
     </a-scene>
 
+
+
     <script>
-      window.addEventListener('click', function () {
-      var v = document.querySelector('#ar-video');
-      v.play();
-audioElement.play();
-      });
+        // ビデオ格納用の変数定義を追加
+        var video = null;
+        AFRAME.registerComponent('registerevents', {
+            init: function () {
+                var marker = this.el;
+                // マーカーを検出したイベントの登録
+                marker.addEventListener('markerFound', function () {
+                    // マーカー認識したら、ビデオ再生
+                    if (video == null) {
+                        video = document.querySelector('#ar-video');
+                    }
+                    video.play();
+                });
+
+                // マーカーを見失ったイベントの登録
+                marker.addEventListener('markerLost', function () {
+                    // マーカー認識が外れたら、、ビデオ停止
+                    video.pause();
+                });
+            }
+        });
+
+
+        /* ビデオクリックで再生するイベントは、一旦コメントアウトしました
+        window.addEventListener('click', function () {
+            video = document.querySelector('#ar-video');
+            video.play();
+        });
+        */
     </script>
-
-  </body>
-
+    </body>
 </html>
