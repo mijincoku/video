@@ -37,6 +37,7 @@
   justify-content: center;
   align-items: center;
   z-index: 10;
+  display: none;
 }
 
 #buttons button {
@@ -84,12 +85,23 @@
     </a-scene>
 
     <script>
-      window.addEventListener('click', function () {
-      var v = document.querySelector('#buttons');
-      v.play();
-audioElement.play();
+      // マーカーが認識されたときにボタンを表示する
+      document.querySelector('a-marker').addEventListener('markerFound', function () {
+        document.querySelector('#buttons').style.display = 'flex';
+      });
+
+      // マーカーが消失したときにボタンを非表示にする
+      document.querySelector('a-marker').addEventListener('markerLost', function () {
+        document.querySelector('#buttons').style.display = 'none';
+      });
+
+      // ボタンがクリックされたときにビデオを再生する
+      document.querySelector('#buttons button').addEventListener('click', function () {
+        var video = document.querySelector('#ar-video');
+        video.play();
       });
     </script>
+
 
   </body>
 
