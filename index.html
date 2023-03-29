@@ -90,9 +90,11 @@
         document.querySelector('#buttons').style.display = 'flex';
       });
 
-      // マーカーが消失したときにボタンを非表示にする
+      // マーカーが消失したときにボタンを非表示にし、ビデオの再生を停止する
       document.querySelector('a-marker').addEventListener('markerLost', function () {
         document.querySelector('#buttons').style.display = 'none';
+        var video = document.querySelector('#ar-video');
+        video.pause(); // ビデオの再生を停止
       });
 
       // ボタンがクリックされたときにビデオを再生する
