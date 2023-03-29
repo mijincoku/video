@@ -1,39 +1,112 @@
+<!DOCTYPE html>
 <html>
-<script src="https://aframe.io/releases/0.9.2/aframe.min.js"></script>
-<script src="https://cdn.rawgit.com/jeromeetienne/AR.js/1.7.7/aframe/build/aframe-ar.js"></script>
-    <body style='margin : 0px; overflow: hidden;'>
+  <head>
+    <script src="https://aframe.io/releases/0.9.2/aframe.min.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/gh/aframevr/aframe@1c2407b26c61958baa93967b5412487cd94b290b/dist/aframe-master.min.js"></script> -->
+    <script src="https://cdn.rawgit.com/jeromeetienne/AR.js/1.7.7/aframe/build/aframe-ar.js"></script>
+    <!-- <script src="https://raw.githack.com/AR-js-org/AR.js/3.0.0/aframe/build/aframe-ar-nft.js"></script> -->
+
+    <script>
+     const nftElements = document.querySelectorAll("a-marker");
+      nftElements.forEach((nftElement) => {
+        nftElement.addEventListener("markerFound", function () {
+          const link = markerLinks[nftElement.id];
+          document.querySelector(".buttons button").setAttribute("onclick", `location.href='${link}'`);
+          document.querySelector(".buttons").style.display = "flex";
+        });
+
+        nftElement.addEventListener("markerLost", function () {
+          document.querySelector(".buttons").style.display = "none";
+        });
+      });     
+</script>
+
+
+  <style>
+    .arjs-loader {
+      height: 100%;
+      width: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      background-color: rgba(0, 0, 0, 0.8);
+      z-index: 9999;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  
+    .arjs-loader div {
+      text-align: center;
+      font-size: 1.25em;
+      color: white;
+    }
+
+
+.buttons {
+  position: absolute;
+  bottom: 2cm;
+  left: 0;
+  width: 100%;
+  height: 5em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+}
+
+.buttons button {
+  background-color: #454545; /* ①ボタンカラーを青緑色に変更 */
+  color: #FFFFFF; /* ②文字色を白に */
+  font-size: 1em; /* ④ボタンの大きさを30%ほど大きく */
+  padding: 0.5em 1em; /* ④ボタンの大きさを30%ほど大きく */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+</style>
+
+  <body style='margin : 0px; overflow: hidden;'>
+
+    <div class="buttons" style="display: none;">
+      <button type="button">▶︎</button>
+    </div>
 
     <a-assets>
-        <video id="ar-video" autoplay loop="true" preload="auto" src="https://res.cloudinary.com/creative-web-solutions-llc/video/upload/v1555785951/VRAssets/Crake_Elegy.mp4"></video>
-    </a-assets>
 
-    <!-- デバッグ用の画面表示、VR用のボタンをそれぞれ非表示に -->
+	    <video id="ar-video" autoplay loop="true" preload="auto" src="https://res.cloudinary.com/creative-web-solutions-llc/video/upload/v1555785951/VRAssets/Crake_Elegy.mp4"></video>
+
+		<audio src="videopath" autoplay></audio>
+
+	  </a-assets>
+
+	  <!-- デバッグ用の画面表示、VR用のボタンをそれぞれ非表示に -->
     <a-scene embedded arjs="debugUIEnabled:false;" vr-mode-ui="enabled: false">
-        <a-marker type='pattern' url='pattern-shiroharaAR.png'>
-            <a-video src="#ar-video" width="4.6" height="4.6" position="0 0 0" rotation="270 0 0" play="true"></a-video>
-        </a-marker>
-        <a-entity camera look-controls wasd-controls></a-entity>
+      <!-- 今回作成した『.patt』ファイルを読み込む -->
+      <a-marker type='pattern' url='pattern-shiroharaAR.patt'>
+	      <a-video src="#ar-video" width="4.6" height="4.6" position="0 0 0" rotation="270 0 0" play="true"></a-video>
+      </a-marker>
+
+      <!-- <a-nft
+      type="nft"        
+      url="https://cdn.glitch.global/24c94111-7a50-4163-a9e1-9d6d366b5663/nolimit"
+      smooth="true"
+      smoothCount="10"
+      smoothTolerance=".01"
+      smoothThreshold="5">
+      <a-video src="#ar-video" width="4.6" height="4.6" position="0 0 0" rotation="270 0 0" play="true"></a-video>
+    </a-nft> -->
+      <a-entity camera></a-entity>
     </a-scene>
 
     <script>
-        // ビデオ格納用の変数定義を追加
-        var video = null;
-        var marker = document.querySelector('a-marker');
-        
-        // マーカーを検出したイベントの登録
-        marker.addEventListener('markerFound', function () {
-            // マーカー認識したら、ビデオ再生
-            if (video == null) {
-                video = document.querySelector('#ar-video');
-            }
-            video.play();
-        });
-
-        // マーカーを見失ったイベントの登録
-        marker.addEventListener('markerLost', function () {
-            // マーカー認識が外れたら、ビデオ停止
-            video.pause();
-        });
+      window.addEventListener('click', function () {
+      var v = document.querySelector('#ar-video');
+      v.play();
+audioElement.play();
+      });
     </script>
-</body>
+
+  </body>
+
 </html>
