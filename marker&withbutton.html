@@ -88,8 +88,6 @@
       // マーカーが認識されたときにボタンを表示する
       document.querySelector('a-marker').addEventListener('markerFound', function () {
         document.querySelector('#buttons').style.display = 'flex';
-        var video = document.querySelector('#ar-video');
-        video.play();
       });
 
       // マーカーが消失したときにボタンを非表示にし、ビデオの再生を停止する
@@ -97,6 +95,12 @@
         document.querySelector('#buttons').style.display = 'none';
         var video = document.querySelector('#ar-video');
         video.pause(); // ビデオの再生を停止
+      });
+
+      // ボタンがクリックされたときにビデオを再生する
+      document.querySelector('#buttons button').addEventListener('click', function () {
+        var video = document.querySelector('#ar-video');
+        video.play();
       });
     </script>
 
