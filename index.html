@@ -6,22 +6,6 @@
     <script src="https://cdn.rawgit.com/jeromeetienne/AR.js/1.7.7/aframe/build/aframe-ar.js"></script>
     <!-- <script src="https://raw.githack.com/AR-js-org/AR.js/3.0.0/aframe/build/aframe-ar-nft.js"></script> -->
 
-    <script>
-     const nftElements = document.querySelectorAll("a-marker");
-      nftElements.forEach((nftElement) => {
-        nftElement.addEventListener("markerFound", function () {
-          const link = markerLinks[nftElement.id];
-          document.querySelector(".buttons button").setAttribute("onclick", `location.href='${link}'`);
-          document.querySelector(".buttons").style.display = "flex";
-        });
-
-        nftElement.addEventListener("markerLost", function () {
-          document.querySelector(".buttons").style.display = "none";
-        });
-      });     
-</script>
-
-
   <style>
     .arjs-loader {
       height: 100%;
@@ -43,7 +27,7 @@
     }
 
 
-.buttons {
+#buttons {
   position: absolute;
   bottom: 2cm;
   left: 0;
@@ -55,7 +39,7 @@
   z-index: 10;
 }
 
-.buttons button {
+#buttons button {
   background-color: #454545; /* ①ボタンカラーを青緑色に変更 */
   color: #FFFFFF; /* ②文字色を白に */
   font-size: 1em; /* ④ボタンの大きさを30%ほど大きく */
@@ -68,7 +52,7 @@
 
   <body style='margin : 0px; overflow: hidden;'>
 
-    <div class="buttons">
+    <div id="buttons" style="display: none;">
       <button type="button">▶︎</button>
     </div>
 
@@ -101,28 +85,11 @@
 
     <script>
       window.addEventListener('click', function () {
-      var v = document.querySelector('#ar-video');
+      var v = document.querySelector('#buttons');
       v.play();
 audioElement.play();
       });
     </script>
-    
-    <script>
-    window.addEventListener("DOMContentLoaded", function() {
-    const nftElements = document.querySelectorAll("a-marker");
-    nftElements.forEach((nftElement) => {
-      nftElement.addEventListener("markerFound", function () {
-        const link = markerLinks[nftElement.id];
-        document.querySelector(".buttons button").setAttribute("onclick", `location.href='${link}'`);
-        document.querySelector(".buttons").style.display = "flex";
-      });
-
-      nftElement.addEventListener("markerLost", function () {
-        document.querySelector(".buttons").style.display = "none";
-      });
-    });
-  });
-</script> 
 
   </body>
 
