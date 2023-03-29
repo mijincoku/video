@@ -1,34 +1,18 @@
 <!doctype html>
 <html lang="en">
 <head>
-
-
     <script src="https://artup.ge/js/aframe-v1.2.0.min.js"></script>
-
-    
             <script src="https://artup.ge/js/aframe-ar.js"></script>
-    
-        
-
-    
-
-
         <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
     <script>
-
-        
         AFRAME.registerComponent('videohandler', {
             init: function () {
-
                 var marker = this.el;
-
                 this.vid = document.querySelector("#vid");
-
                 marker.addEventListener('markerFound', function () {
                     // this.vid.muted = false;
                     this.vid.play();
                     document.getElementById("volume").style.display = "block";
-
                 }.bind(this));
 
                 marker.addEventListener('markerLost', function() {
@@ -36,46 +20,34 @@
                     this.vid.pause();
                     // this.vid.currentTime = 0;
                     document.getElementById("volume").style.display = "none";
-
                 }.bind(this));
             }
         });
 
         function toggleMute() {
-
             var video=document.getElementById("vid")
-
             if(video.muted){
                 video.muted = false;
-
                 document.getElementById("volume").innerHTML = '<svg version="1.1" id="muted" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 480 480" style="enable-background:new 0 0 480 480;" xml:space="preserve"> <path d="M278.944,17.577c-5.568-2.656-12.128-1.952-16.928,1.92L106.368,144.009H32c-17.632,0-32,14.368-32,32v128 c0,17.664,14.368,32,32,32h74.368l155.616,124.512c2.912,2.304,6.464,3.488,10.016,3.488c2.368,0,4.736-0.544,6.944-1.6 c5.536-2.656,9.056-8.256,9.056-14.4v-416C288,25.865,284.48,20.265,278.944,17.577z"/> <path d="M368.992,126.857c-6.304-6.208-16.416-6.112-22.624,0.128c-6.208,6.304-6.144,16.416,0.128,22.656 C370.688,173.513,384,205.609,384,240.009s-13.312,66.496-37.504,90.368c-6.272,6.176-6.336,16.32-0.128,22.624 c3.136,3.168,7.264,4.736,11.36,4.736c4.064,0,8.128-1.536,11.264-4.64C399.328,323.241,416,283.049,416,240.009 S399.328,156.777,368.992,126.857z"/> <path d="M414.144,81.769c-6.304-6.24-16.416-6.176-22.656,0.096c-6.208,6.272-6.144,16.416,0.096,22.624 C427.968,140.553,448,188.681,448,240.009s-20.032,99.424-56.416,135.488c-6.24,6.24-6.304,16.384-0.096,22.656 c3.168,3.136,7.264,4.704,11.36,4.704c4.064,0,8.16-1.536,11.296-4.64C456.64,356.137,480,299.945,480,240.009 S456.64,123.881,414.144,81.769z"/> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> </svg>';
-
             } else {
                 video.muted = true;
                 document.getElementById("volume").innerHTML = '<svg id="unmuted" enable-background="new 0 0 448.046 448.046" viewBox="0 0 448.046 448.046" xmlns="http://www.w3.org/2000/svg"><path d="m358.967 1.614c-5.6-2.72-12.128-1.952-16.928 1.92l-155.648 124.512h-74.368c-17.664 0-32 14.336-32 32v128c0 17.664 14.336 32 32 32h74.368l155.616 124.512c2.912 2.304 6.464 3.488 10.016 3.488 2.336 0 4.704-.544 6.944-1.6 5.536-2.656 9.056-8.256 9.056-14.4v-416c0-6.144-3.52-11.744-9.056-14.432z"/><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/></svg>';
             }
-
         }
-
         
         function alertInfo() {
             var element = document.getElementById("infoBox");
             element.classList.toggle("active");
-
             var overlay = document.getElementById("overlay");
             overlay.classList.toggle("active");
-
         }
 
         function cloasAlert() {
             var cloasAlertInfo = document.getElementById("overlay");
             cloasAlertInfo.classList.remove("active");
-
             var hideAlert = document.getElementById("infoBox");
             hideAlert.classList.remove("active");
-
         }
-
     </script>
 
     <style>
@@ -148,8 +120,6 @@
 </head>
 <body>
 
-
-
     <span id="volume" style="display: none;" onclick="toggleMute();">
         <svg id="unmuted" enable-background="new 0 0 448.046 448.046" viewBox="0 0 448.046 448.046" xmlns="http://www.w3.org/2000/svg"><path d="m358.967 1.614c-5.6-2.72-12.128-1.952-16.928 1.92l-155.648 124.512h-74.368c-17.664 0-32 14.336-32 32v128c0 17.664 14.336 32 32 32h74.368l155.616 124.512c2.912 2.304 6.464 3.488 10.016 3.488 2.336 0 4.704-.544 6.944-1.6 5.536-2.656 9.056-8.256 9.056-14.4v-416c0-6.144-3.52-11.744-9.056-14.432z"/><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/></svg>
     </span>
@@ -162,7 +132,6 @@
         <div class="infoBox-box">
             <div class="infoBox-body">
                 <p>Scan the Augmented Reality Artworks and see them come alive with animation and sound.</p>
-
 <p><strong>Note: </strong>Torn off Power saving mode.<br />
 Artworks can be found at <strong>artup.ge</strong></p>
 
@@ -182,7 +151,7 @@ Artworks can be found at <strong>artup.ge</strong></p>
             <a-assets>
             <video
                     id="vid"
-                    src="/files/other/46da6cfb17931d0.mp4"
+                    src="https://res.cloudinary.com/creative-web-solutions-llc/video/upload/v1555785951/VRAssets/Crake_Elegy.mp4"
                     preload="auto"
                     response-type="arraybuffer"
                     loop
@@ -193,47 +162,30 @@ Artworks can be found at <strong>artup.ge</strong></p>
                     playsinline
             ></video>
         </a-assets>
-                                    <a-marker
-                        videohandler
 
-                        smooth="true"
-                        smoothCount="10"
-                        smoothTolerance=".01"
-                        smoothThreshold="5"
-
-                                                                                                type='pattern'
-                        url="/files/other/8fbc6c80344bea8.patt"
-                                                
-                >
-                    
-            <a-video
-                scale="0.1 0.1 0.1"
-                src="#vid"
-
-                rotation='-90 0 0'
-                position='0 0 0'
-                width='10px'
-                height='10px'
-
-
-                
-
-                
-
-
-            >
-            </a-video>
-
-                                    </a-marker>
-                        
+        <a-marker
+        videohandler
+        smooth="true"
+        smoothCount="10"
+        smoothTolerance=".01"
+        smoothThreshold="5"
+        type='pattern'
+        url="pattern-shiroharaAR.patt"
+         >
+         
+         
+         <a-video
+         scale="0.1 0.1 0.1"
+         src="#vid"
+         rotation='-90 0 0'
+         position='0 0 0'
+         width='10px'
+         height='10px'
+         > </a-video>
+        </a-marker>
+        
+        <a-entity camera></a-entity>
     
-    
-            <a-entity camera></a-entity>
-    
-
-
 </a-scene>
-
-
 </body>
 </html>
