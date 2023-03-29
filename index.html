@@ -2,15 +2,15 @@
 <html>
 <head>
   <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
-  <script src="https://cdn.rawgit.com/jeromeetienne/AR.js/1.8.0/aframe/build/aframe-ar.js"></script>
+  <script src="https://unpkg.com/arjs@3.3.2/aframe/build/aframe-ar.min.js"></script>
 </head>
 <body>
-  <a-scene embedded arjs="trackingMethod: best; sourceType: webcam;">
+  <a-scene embedded arjs="trackingMethod: best; sourceType: webcam;" onclick="document.querySelector('#videoSource').play();">
     <a-marker type="pattern" url="pattern-shiroharaAR.patt">
       <a-entity id="video" geometry="primitive: plane; width: 1; height: auto;" material="shader: flat; src: #videoSource;" position="0 0 0" rotation="-90 0 0"></a-entity>
     </a-marker>
-    <a-assets>
-      <video id="videoSource" src="https://res.cloudinary.com/creative-web-solutions-llc/video/upload/v1555785951/VRAssets/Crake_Elegy.mp4" crossorigin="anonymous" loop="true" autoplay="true"></video>
+    <a-assets timeout="10000">
+      <video id="videoSource" src="https://res.cloudinary.com/creative-web-solutions-llc/video/upload/v1555785951/VRAssets/Crake_Elegy.mp4" crossorigin="anonymous" loop="true"></video>
     </a-assets>
   </a-scene>
 </body>
