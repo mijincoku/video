@@ -1,191 +1,49 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <script src="https://artup.ge/js/aframe-v1.2.0.min.js"></script>
-            <script src="https://artup.ge/js/aframe-ar.js"></script>
-        <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+<script src="https://aframe.io/releases/0.9.2/aframe.min.js"></script>
+
+<script src="https://cdn.rawgit.com/jeromeetienne/AR.js/1.7.7/aframe/build/aframe-ar.js"></script>
+
+  <body style='margin : 0px; overflow: hidden;'>
+
+    <a-assets>
+
+	    <video id="ar-video" autoplay loop="true" preload="auto" src="https://res.cloudinary.com/creative-web-solutions-llc/video/upload/v1555785951/VRAssets/Crake_Elegy.mp4"></video>
+
+		<audio src="videopath" autoplay></audio>
+
+	  </a-assets>
+
+	  <!-- デバッグ用の画面表示、VR用のボタンをそれぞれ非表示に -->
+
+    <a-scene embedded arjs="debugUIEnabled:false;" vr-mode-ui="enabled: false">
+
+      <!-- 今回作成した『.patt』ファイルを読み込む -->
+
+      <a-marker type='pattern' url='pattern-shiroharaAR.patt'>
+
+	      <a-video src="#ar-video" width="4.6" height="4.6" position="0 0 0" rotation="270 0 0" play="true"></a-video>
+
+      </a-marker>
+
+      <a-entity camera></a-entity>
+
+    </a-scene>
+
+    
+
     <script>
-        AFRAME.registerComponent('videohandler', {
-            init: function () {
-                var marker = this.el;
-                this.vid = document.querySelector("#vid");
-                marker.addEventListener('markerFound', function () {
-                    // this.vid.muted = false;
-                    this.vid.play();
-                    document.getElementById("volume").style.display = "block";
-                }.bind(this));
 
-                marker.addEventListener('markerLost', function() {
-                    //this.vid.muted = true;
-                    this.vid.pause();
-                    // this.vid.currentTime = 0;
-                    document.getElementById("volume").style.display = "none";
-                }.bind(this));
-            }
-        });
+      window.addEventListener('click', function () {
 
-        function toggleMute() {
-            var video=document.getElementById("vid")
-            if(video.muted){
-                video.muted = false;
-                document.getElementById("volume").innerHTML = '<svg version="1.1" id="muted" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 480 480" style="enable-background:new 0 0 480 480;" xml:space="preserve"> <path d="M278.944,17.577c-5.568-2.656-12.128-1.952-16.928,1.92L106.368,144.009H32c-17.632,0-32,14.368-32,32v128 c0,17.664,14.368,32,32,32h74.368l155.616,124.512c2.912,2.304,6.464,3.488,10.016,3.488c2.368,0,4.736-0.544,6.944-1.6 c5.536-2.656,9.056-8.256,9.056-14.4v-416C288,25.865,284.48,20.265,278.944,17.577z"/> <path d="M368.992,126.857c-6.304-6.208-16.416-6.112-22.624,0.128c-6.208,6.304-6.144,16.416,0.128,22.656 C370.688,173.513,384,205.609,384,240.009s-13.312,66.496-37.504,90.368c-6.272,6.176-6.336,16.32-0.128,22.624 c3.136,3.168,7.264,4.736,11.36,4.736c4.064,0,8.128-1.536,11.264-4.64C399.328,323.241,416,283.049,416,240.009 S399.328,156.777,368.992,126.857z"/> <path d="M414.144,81.769c-6.304-6.24-16.416-6.176-22.656,0.096c-6.208,6.272-6.144,16.416,0.096,22.624 C427.968,140.553,448,188.681,448,240.009s-20.032,99.424-56.416,135.488c-6.24,6.24-6.304,16.384-0.096,22.656 c3.168,3.136,7.264,4.704,11.36,4.704c4.064,0,8.16-1.536,11.296-4.64C456.64,356.137,480,299.945,480,240.009 S456.64,123.881,414.144,81.769z"/> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> </svg>';
-            } else {
-                video.muted = true;
-                document.getElementById("volume").innerHTML = '<svg id="unmuted" enable-background="new 0 0 448.046 448.046" viewBox="0 0 448.046 448.046" xmlns="http://www.w3.org/2000/svg"><path d="m358.967 1.614c-5.6-2.72-12.128-1.952-16.928 1.92l-155.648 124.512h-74.368c-17.664 0-32 14.336-32 32v128c0 17.664 14.336 32 32 32h74.368l155.616 124.512c2.912 2.304 6.464 3.488 10.016 3.488 2.336 0 4.704-.544 6.944-1.6 5.536-2.656 9.056-8.256 9.056-14.4v-416c0-6.144-3.52-11.744-9.056-14.432z"/><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/></svg>';
-            }
-        }
-        
-        function alertInfo() {
-            var element = document.getElementById("infoBox");
-            element.classList.toggle("active");
-            var overlay = document.getElementById("overlay");
-            overlay.classList.toggle("active");
-        }
+      var v = document.querySelector('#ar-video');
 
-        function cloasAlert() {
-            var cloasAlertInfo = document.getElementById("overlay");
-            cloasAlertInfo.classList.remove("active");
-            var hideAlert = document.getElementById("infoBox");
-            hideAlert.classList.remove("active");
-        }
+      v.play();
+
+audioElement.play();
+
+      });
+
     </script>
 
-    <style>
-        body {
-            margin : 0;
-            overflow: hidden;
-            font-family: 'Open Sans', sans-serif;
-        }
+  </body>
 
-        #volume {
-            background: rgba(255, 255, 255, 0.45);
-            position: fixed;
-            z-index: 221;
-            bottom: 20px;
-            right: 20px;
-            height: 30px;
-            width: 30px;
-            padding: 15px;
-            border-radius: 50%;
-        }
-
-        #volume svg#muted,
-        #volume svg#unmuted  {
-            fill: #000;
-            height: 100%;
-            width: 100%;;
-            margin-left: 0;
-        }
-
-        #volume svg#unmuted {
-            margin-left: -6px;
-        }
-
-        #infoalert {
-            background: rgba(255, 255, 255, 0.45);
-            position: fixed;
-            z-index: 221;
-            top: 20px;
-            right: 20px;
-            height: 30px;
-            width: 30px;
-            padding: 15px;
-            border-radius: 50%;
-            cursor: pointer;
-        }
-
-        #infoalert svg {
-            fill: #000;
-            height: 100%;
-            width: 100%;;
-            margin-left: 0;
-        }
-
-        #overlay {
-            cursor: pointer;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            width: 100vw;
-            height: 100vh;
-            background: rgba(0, 0, 0, 0.4);
-            z-index: 90;
-            display: none;
-        }
-    </style>
-
-
-</head>
-<body>
-
-    <span id="volume" style="display: none;" onclick="toggleMute();">
-        <svg id="unmuted" enable-background="new 0 0 448.046 448.046" viewBox="0 0 448.046 448.046" xmlns="http://www.w3.org/2000/svg"><path d="m358.967 1.614c-5.6-2.72-12.128-1.952-16.928 1.92l-155.648 124.512h-74.368c-17.664 0-32 14.336-32 32v128c0 17.664 14.336 32 32 32h74.368l155.616 124.512c2.912 2.304 6.464 3.488 10.016 3.488 2.336 0 4.704-.544 6.944-1.6 5.536-2.656 9.056-8.256 9.056-14.4v-416c0-6.144-3.52-11.744-9.056-14.432z"/><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/><g/></svg>
-    </span>
-
-    <span id="infoalert" onclick="alertInfo();">
-        <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 111.577 111.577" style="enable-background:new 0 0 111.577 111.577;" xml:space="preserve"> <g> <path d="M78.962,99.536l-1.559,6.373c-4.677,1.846-8.413,3.251-11.195,4.217c-2.785,0.969-6.021,1.451-9.708,1.451 c-5.662,0-10.066-1.387-13.207-4.142c-3.141-2.766-4.712-6.271-4.712-10.523c0-1.646,0.114-3.339,0.351-5.064 c0.239-1.727,0.619-3.672,1.139-5.846l5.845-20.688c0.52-1.981,0.962-3.858,1.316-5.633c0.359-1.764,0.532-3.387,0.532-4.848 c0-2.642-0.547-4.49-1.636-5.529c-1.089-1.036-3.167-1.562-6.252-1.562c-1.511,0-3.064,0.242-4.647,0.71 c-1.59,0.47-2.949,0.924-4.09,1.346l1.563-6.378c3.829-1.559,7.489-2.894,10.99-4.002c3.501-1.111,6.809-1.667,9.938-1.667 c5.623,0,9.962,1.359,13.009,4.077c3.047,2.72,4.57,6.246,4.57,10.591c0,0.899-0.1,2.483-0.315,4.747 c-0.21,2.269-0.601,4.348-1.171,6.239l-5.82,20.605c-0.477,1.655-0.906,3.547-1.279,5.676c-0.385,2.115-0.569,3.731-0.569,4.815 c0,2.736,0.61,4.604,1.833,5.597c1.232,0.993,3.354,1.487,6.368,1.487c1.415,0,3.025-0.251,4.814-0.744 C76.854,100.348,78.155,99.915,78.962,99.536z M80.438,13.03c0,3.59-1.353,6.656-4.072,9.177c-2.712,2.53-5.98,3.796-9.803,3.796 c-3.835,0-7.111-1.266-9.854-3.796c-2.738-2.522-4.11-5.587-4.11-9.177c0-3.583,1.372-6.654,4.11-9.207 C59.447,1.274,62.729,0,66.563,0c3.822,0,7.091,1.277,9.803,3.823C79.087,6.376,80.438,9.448,80.438,13.03z"/> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> </svg>
-    </span>
-
-    <section id="infoBox">
-        <div class="infoBox-box">
-            <div class="infoBox-body">
-                <p>Scan the Augmented Reality Artworks and see them come alive with animation and sound.</p>
-<p><strong>Note: </strong>Torn off Power saving mode.<br />
-Artworks can be found at <strong>artup.ge</strong></p>
-
-<p>&nbsp;</p>
-            </div>
-        </div>
-    </section>
-    <div id="overlay" onclick="cloasAlert();"></div>
-
-<a-scene
-        vr-mode-ui="enabled: false;"
-        embedded
-                    renderer="logarithmicDepthBuffer: true;"
-            arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false;  patternRatio: 0.90;    "
-        
-                >
-            <a-assets>
-            <video
-                    id="vid"
-                    src="https://res.cloudinary.com/creative-web-solutions-llc/video/upload/v1555785951/VRAssets/Crake_Elegy.mp4"
-                    preload="auto"
-                    response-type="arraybuffer"
-                    loop
-                    crossorigin
-                    webkit-playsinline
-                    autoplay
-                    muted
-                    playsinline
-            ></video>
-        </a-assets>
-
-        <a-marker
-        videohandler
-        smooth="true"
-        smoothCount="10"
-        smoothTolerance=".01"
-        smoothThreshold="5"
-        type='pattern'
-        url="pattern-shiroharaAR.patt"
-         >
-         
-         
-         <a-video
-         scale="0.1 0.1 0.1"
-         src="https://res.cloudinary.com/creative-web-solutions-llc/video/upload/v1555785951/VRAssets/Crake_Elegy.mp4"
-         rotation='-90 0 0'
-         position='0 0 0'
-         width='10px'
-         height='10px'
-         > </a-video>
-        </a-marker>
-        
-        <a-entity camera></a-entity>
-    
-</a-scene>
-</body>
 </html>
