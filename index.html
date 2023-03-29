@@ -5,53 +5,35 @@
 
     <a-assets>
         <video id="ar-video" autoplay loop="true" preload="auto" src="https://res.cloudinary.com/creative-web-solutions-llc/video/upload/v1555785951/VRAssets/Crake_Elegy.mp4"></video>
-        <audio src="videopath" autoplay></audio>
     </a-assets>
-
-    
 
     <!-- デバッグ用の画面表示、VR用のボタンをそれぞれ非表示に -->
     <a-scene embedded arjs="debugUIEnabled:false;" vr-mode-ui="enabled: false">
-    <!-- 今回作成した『.patt』ファイルを読み込む -->
-    <!-- ※こちらで試す時には、"hiro"のマーカー定義に変更して確認しました -->
-    <a-marker type='pattern' url='pattern-shiroharaAR.png'>
-        <a-video src="#ar-video" width="4.6" height="4.6" position="0 0 0" rotation="270 0 0" play="true"></a-video>
-    </a-marker>
-    <a-entity camera></a-entity>
+        <a-marker type='pattern' url='pattern-shiroharaAR.png'>
+            <a-video src="#ar-video" width="4.6" height="4.6" position="0 0 0" rotation="270 0 0" play="true"></a-video>
+        </a-marker>
+        <a-entity camera look-controls wasd-controls></a-entity>
     </a-scene>
-
-
 
     <script>
         // ビデオ格納用の変数定義を追加
         var video = null;
-        AFRAME.registerComponent('registerevents', {
-            init: function () {
-                var marker = this.el;
-                // マーカーを検出したイベントの登録
-                marker.addEventListener('markerFound', function () {
-                    // マーカー認識したら、ビデオ再生
-                    if (video == null) {
-                        video = document.querySelector('#ar-video');
-                    }
-                    video.play();
-                });
-
-                // マーカーを見失ったイベントの登録
-                marker.addEventListener('markerLost', function () {
-                    // マーカー認識が外れたら、、ビデオ停止
-                    video.pause();
-                });
+        var marker = document.querySelector('a-marker');
+        
+        // マーカーを検出したイベントの登録
+        marker.addEventListener('markerFound', function () {
+            // マーカー認識したら、ビデオ再生
+            if (video == null) {
+                video = document.querySelector('#ar-video');
             }
-        });
-
-
-        /* ビデオクリックで再生するイベントは、一旦コメントアウトしました
-        window.addEventListener('click', function () {
-            video = document.querySelector('#ar-video');
             video.play();
         });
-        */
+
+        // マーカーを見失ったイベントの登録
+        marker.addEventListener('markerLost', function () {
+            // マーカー認識が外れたら、ビデオ停止
+            video.pause();
+        });
     </script>
-    </body>
+</body>
 </html>
